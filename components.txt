@@ -1,6 +1,6 @@
-Arduino Uno
-HC-SR04
-L293D
+Arduino Uno 
+HC-SR04 ultrasonic sensor 
+L293D motor driver
 DC Motor
 LEDs
 Resistors
