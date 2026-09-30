@@ -1,0 +1,27 @@
+WIRING GUIDE
+
+[1] ULTRASONIC SENSOR (HC-SR04)
+--------------------------------------------------
+* VCC  -->  Arduino 5V
+* Trig -->  Arduino Pin 9
+* Echo -->  Arduino Pin 10
+* GND  -->  Arduino GND
+
+[2] MOTOR DRIVER (L293D)
+--------------------------------------------------
+* EN1 (Enable 1) -->  Arduino Pin 5 (PWM Speed)
+* IN1            -->  Arduino Pin 7 (Direction)
+* IN2            -->  Arduino Pin 8 (Direction)
+* OUT1 & OUT2    -->  DC Motor Terminals
+* VCC1 (Logic)   -->  Arduino 5V
+* VCC2 (Power)   -->  Arduino 5V
+* GND            -->  Arduino GND (Common Ground)
+
+[3] STATUS LEDs (Connect via 220 Ohm Resistors)
+--------------------------------------------------
+* Green Anode   (+) -->  Arduino Pin 2
+* Yellow Anode  (+) -->  Arduino Pin 3
+* Orange Anode  (+) -->  Arduino Pin 4
+* Red Anode     (+) -->  Arduino Pin 6
+* All Cathodes  (-) -->  Arduino GND
+
