@@ -1,0 +1,101 @@
+#define TRIG_PIN 9
+#define ECHO_PIN 10
+
+#define MOTOR_EN 5
+#define MOTOR_IN1 7
+#define MOTOR_IN2 8
+
+#define GREEN_LED 2
+#define YELLOW_LED 3
+#define ORANGE_LED 4
+#define RED_LED 6
+
+long duration;
+float distance;
+
+void setup()
+{
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+
+  pinMode(MOTOR_EN, OUTPUT);
+  pinMode(MOTOR_IN1, OUTPUT);
+  pinMode(MOTOR_IN2, OUTPUT);
+
+  pinMode(GREEN_LED, OUTPUT);
+  pinMode(YELLOW_LED, OUTPUT);
+  pinMode(ORANGE_LED, OUTPUT);
+  pinMode(RED_LED, OUTPUT);
+
+  Serial.begin(9600);
+
+  // Motor direction
+  digitalWrite(MOTOR_IN1, HIGH);
+  digitalWrite(MOTOR_IN2, LOW);
+}
+
+float getDistance()
+{
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+
+  digitalWrite(TRIG_PIN, LOW);
+
+  duration = pulseIn(ECHO_PIN, HIGH);
+
+  distance = duration * 0.0343 / 2;
+
+  return distance;
+}
+
+void loop()
+{
+  distance = getDistance();
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  // Turn all LEDs OFF
+  digitalWrite(GREEN_LED, LOW);
+  digitalWrite(YELLOW_LED, LOW);
+  digitalWrite(ORANGE_LED, LOW);
+  digitalWrite(RED_LED, LOW);
+
+  int motorSpeed;
+
+  if (distance > 50)
+  {
+    // Far away -> full speed
+    motorSpeed = 255;
+    digitalWrite(GREEN_LED, HIGH);
+  }
+
+  else if (distance > 30)
+  {
+    // 30-50 cm -> medium-high speed
+    motorSpeed = 180;
+    digitalWrite(YELLOW_LED, HIGH);
+  }
+
+  else if (distance >= 15)
+  {
+    // 15-30 cm -> slow speed
+    motorSpeed = 100;
+    digitalWrite(ORANGE_LED, HIGH);
+  }
+
+  else
+  {
+    // Less than 15 cm -> STOP
+    motorSpeed = 0;
+    digitalWrite(RED_LED, HIGH);
+  }
+
+  analogWrite(MOTOR_EN, motorSpeed);
+
+  delay(100);
+}
